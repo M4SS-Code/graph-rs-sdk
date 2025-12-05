@@ -58,7 +58,7 @@ impl GraphUrl {
     }
 
     #[allow(clippy::result_unit_err)]
-    pub fn path_segments_mutable(&mut self) -> Result<PathSegmentsMut, ()> {
+    pub fn path_segments_mutable(&mut self) -> Result<PathSegmentsMut<'_>, ()> {
         self.url.path_segments_mut()
     }
 
@@ -77,7 +77,7 @@ impl GraphUrl {
         Url::parse(self.as_str()).unwrap()
     }
 
-    pub fn query_pairs_mutable(&mut self) -> Serializer<UrlQuery> {
+    pub fn query_pairs_mutable(&mut self) -> Serializer<'_, UrlQuery<'_>> {
         self.url.query_pairs_mut()
     }
 
