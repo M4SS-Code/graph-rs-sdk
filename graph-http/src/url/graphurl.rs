@@ -1,5 +1,6 @@
 use graph_error::GraphFailure;
 use std::ffi::OsStr;
+use std::fmt::{self, Display};
 use std::ops::{Deref, Index, Range, RangeFrom, RangeFull, RangeTo};
 use std::str::FromStr;
 use url::form_urlencoded::Serializer;
@@ -235,9 +236,9 @@ impl AsMut<Url> for GraphUrl {
     }
 }
 
-impl ToString for GraphUrl {
-    fn to_string(&self) -> String {
-        self.url[..].to_string()
+impl Display for GraphUrl {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.url)
     }
 }
 
