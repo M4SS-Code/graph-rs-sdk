@@ -63,7 +63,6 @@ use from_as::*;
 use graph_error::GraphFailure;
 use graph_http::url::GraphUrl;
 use inflector::Inflector;
-use rayon::prelude::*;
 use reqwest::Url;
 use serde_json::Value;
 use std::collections::{BTreeSet, HashMap};
@@ -155,7 +154,7 @@ impl OpenApi {
     pub fn filter_path(&self, pat: &str) -> BTreeMap<String, PathItem> {
         self.paths
             .clone()
-            .into_par_iter()
+            .into_iter()
             .filter(|(path, _path_item)| path.starts_with(pat))
             .collect()
     }
@@ -164,7 +163,7 @@ impl OpenApi {
     pub fn filter_path_contains(&self, pat: &str) -> BTreeMap<String, PathItem> {
         self.paths
             .clone()
-            .into_par_iter()
+            .into_iter()
             .filter(|(path, _path_item)| path.contains(pat))
             .collect()
     }
@@ -184,7 +183,7 @@ impl OpenApi {
     pub fn filter_path_not_contains(&self, pat: &str) -> BTreeMap<String, PathItem> {
         self.paths
             .clone()
-            .into_par_iter()
+            .into_iter()
             .filter(|(path, _path_item)| !path.contains(pat))
             .collect()
     }
@@ -218,7 +217,7 @@ impl OpenApi {
         let p = resource_parsing_info.path.to_string();
         self.paths
             .clone()
-            .into_par_iter()
+            .into_iter()
             .map(|(path, path_item)| {
                 (
                     path.trim_start_matches(&trim_path_start).to_string(),
@@ -237,7 +236,7 @@ impl OpenApi {
         self.paths = self
             .paths
             .clone()
-            .into_par_iter()
+            .into_iter()
             .map(|(path, path_item)| (path.transform_path(), path_item))
             .collect();
     }
