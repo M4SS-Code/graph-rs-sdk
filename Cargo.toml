@@ -73,7 +73,7 @@ http = { version = "1", default-features = false }
 bytes = { version = "1.4.0" }
 futures-util = { version = "0.3", default-features = false }
 http = { workspace = true }
-tokio = { version = "1.27.0", features = ["full"] }
+tokio = { version = "1.27.0", features = ["macros", "rt-multi-thread"] }
 warp = { version = "0.3.5" }
 webbrowser = "0.8.7"
 anyhow = "1.0.69"
