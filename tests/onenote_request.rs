@@ -2,7 +2,6 @@ use graph_http::traits::ResponseExt;
 use graph_rs_sdk::header::{HeaderValue, CONTENT_TYPE};
 use graph_rs_sdk::http::FileConfig;
 use std::ffi::OsStr;
-use std::thread;
 use std::time::Duration;
 use test_tools::oauth_request::Environment;
 use test_tools::oauth_request::DEFAULT_ONENOTE_CREDENTIALS_MUTEX;
@@ -101,7 +100,7 @@ async fn create_delete_page_from_file() {
         let body: serde_json::Value = response.json().await.unwrap();
         let page_id = body["id"].as_str().unwrap();
 
-        thread::sleep(Duration::from_secs(3));
+        tokio::time::sleep(Duration::from_secs(3)).await;
         let delete_res = test_client
             .client
             .user(&test_client.user_id)
@@ -145,7 +144,7 @@ async fn download_page() {
         let body: serde_json::Value = response.json().await.unwrap();
         let page_id = body["id"].as_str().unwrap();
 
-        thread::sleep(Duration::from_secs(3));
+        tokio::time::sleep(Duration::from_secs(3)).await;
         let response = test_client
             .client
             .user(&test_client.user_id)

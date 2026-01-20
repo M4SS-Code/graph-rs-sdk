@@ -1,7 +1,6 @@
 use graph_error::GraphResult;
 use graph_http::traits::ResponseExt;
 use graph_rs_sdk::Graph;
-use std::thread;
 use std::time::Duration;
 
 use test_tools::oauth_request::{Environment, OAuthTestClient, ASYNC_THROTTLE_MUTEX};
@@ -31,7 +30,7 @@ async fn job_status() {
         if let Some((drive_id, client)) = OAuthTestClient::ClientCredentials.graph_async().await {
             // Delete file if its still there from last test run.
             let _ = delete_item(drive_id.as_str(), copy_drive_path, &client).await;
-            thread::sleep(Duration::from_secs(2));
+            tokio::time::sleep(Duration::from_secs(2)).await;
 
             let result = client
                 .drive(drive_id.as_str())
@@ -45,7 +44,7 @@ async fn job_status() {
             //let id_option = body["id"].as_str();
             assert!(body["id"].as_str().is_some());
 
-            thread::sleep(Duration::from_secs(2));
+            tokio::time::sleep(Duration::from_secs(2)).await;
 
             let copy_result = client
                 .drive(drive_id.as_str())

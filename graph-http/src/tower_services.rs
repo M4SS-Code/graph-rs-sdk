@@ -1,13 +1,12 @@
 use std::future::Future;
 use std::pin::Pin;
-use std::sync::Arc;
 use std::task::{Context, Poll};
 use std::time::Duration;
-use std::{sync::Mutex, task::Waker, thread};
 
 use futures_util::future;
 use http::StatusCode;
 use reqwest::{Request, Response};
+use tokio::time::{sleep, Sleep};
 
 #[derive(Clone)]
 pub(crate) struct Attempts(pub usize);
@@ -66,11 +65,11 @@ impl tower::retry::Policy<Request, Response, Box<dyn std::error::Error + Send + 
                     Some(retry_after) => match retry_after.to_str() {
                         Ok(ra) => match ra.parse::<u64>() {
                             Ok(retry_after) => {
-                                let sleep = WaitBeforeRetry::new(
-                                    Some(WaitFor()),
+                                let wait = WaitBeforeRetry::new(
+                                    WaitFor(),
                                     Duration::from_secs(retry_after),
                                 );
-                                Some(future::Either::Right(sleep))
+                                Some(future::Either::Right(wait))
                             }
                             Err(_) => None,
                         },
@@ -91,56 +90,25 @@ impl tower::retry::Policy<Request, Response, Box<dyn std::error::Error + Send + 
 
 pub struct WaitBeforeRetry<T> {
     inner: Option<T>,
-    shared_state: Arc<Mutex<SharedState>>,
-}
-
-struct SharedState {
-    completed: bool,
-    waker: Option<Waker>,
+    sleep: Pin<Box<Sleep>>,
 }
 
 impl<T> WaitBeforeRetry<T> {
-    pub fn new(inner: Option<T>, duration: Duration) -> Self {
-        let shared_state = Arc::new(Mutex::new(SharedState {
-            completed: false,
-            waker: None,
-        }));
-
-        // Spawn the new thread
-        let thread_shared_state = shared_state.clone();
-        thread::spawn(move || {
-            thread::sleep(duration);
-            let mut shared_state = thread_shared_state.lock().unwrap();
-            // Signal that the timer has completed and wake up the last
-            // task on which the future was polled, if one exists.
-            shared_state.completed = true;
-            if let Some(waker) = shared_state.waker.take() {
-                waker.wake()
-            }
-        });
-
+    pub fn new(inner: T, duration: Duration) -> Self {
         WaitBeforeRetry {
-            inner,
-            shared_state,
+            inner: Some(inner),
+            sleep: Box::pin(sleep(duration)),
         }
     }
 }
 
-impl<T> Unpin for WaitBeforeRetry<T> {}
-
-impl<T> Future for WaitBeforeRetry<T> {
+impl<T: Unpin> Future for WaitBeforeRetry<T> {
     type Output = T;
 
-    #[inline]
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<T> {
-        {
-            let mut shared_state = self.shared_state.lock().unwrap();
-            if !shared_state.completed {
-                shared_state.waker = Some(cx.waker().clone());
-                return Poll::Pending;
-            }
+        match self.sleep.as_mut().poll(cx) {
+            Poll::Pending => Poll::Pending,
+            Poll::Ready(()) => Poll::Ready(self.inner.take().expect("Ready polled after completion")),
         }
-
-        Poll::Ready(self.inner.take().expect("Ready polled after completion"))
     }
 }
