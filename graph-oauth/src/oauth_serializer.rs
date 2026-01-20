@@ -9,12 +9,9 @@ use url::form_urlencoded::Serializer;
 use graph_error::{AuthorizationFailure, IdentityResult};
 
 use crate::identity::{AsQuery, Prompt, ResponseType};
-use crate::strum::IntoEnumIterator;
 
 /// Fields that represent common OAuth credentials.
-#[derive(
-    Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize, EnumIter,
-)]
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub enum AuthParameter {
     ClientId,
     ClientSecret,
@@ -46,6 +43,40 @@ pub enum AuthParameter {
 }
 
 impl AuthParameter {
+    /// Returns an iterator over all AuthParameter variants.
+    pub fn iter() -> impl Iterator<Item = AuthParameter> {
+        const ALL_VARIANTS: [AuthParameter; 27] = [
+            AuthParameter::ClientId,
+            AuthParameter::ClientSecret,
+            AuthParameter::RedirectUri,
+            AuthParameter::AuthorizationCode,
+            AuthParameter::AccessToken,
+            AuthParameter::RefreshToken,
+            AuthParameter::ResponseMode,
+            AuthParameter::State,
+            AuthParameter::SessionState,
+            AuthParameter::ResponseType,
+            AuthParameter::GrantType,
+            AuthParameter::Nonce,
+            AuthParameter::Prompt,
+            AuthParameter::IdToken,
+            AuthParameter::Resource,
+            AuthParameter::DomainHint,
+            AuthParameter::Scope,
+            AuthParameter::LoginHint,
+            AuthParameter::ClientAssertion,
+            AuthParameter::ClientAssertionType,
+            AuthParameter::CodeVerifier,
+            AuthParameter::CodeChallenge,
+            AuthParameter::CodeChallengeMethod,
+            AuthParameter::AdminConsent,
+            AuthParameter::Username,
+            AuthParameter::Password,
+            AuthParameter::DeviceCode,
+        ];
+        ALL_VARIANTS.into_iter()
+    }
+
     pub fn alias(self) -> &'static str {
         match self {
             AuthParameter::ClientId => "client_id",

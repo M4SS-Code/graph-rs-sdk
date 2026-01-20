@@ -41,8 +41,6 @@
 
 #[macro_use]
 extern crate serde;
-#[macro_use]
-extern crate strum;
 
 pub(crate) mod oauth_serializer;
 

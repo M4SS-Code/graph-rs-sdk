@@ -6,7 +6,6 @@ extern crate derive_builder;
 #[macro_use]
 extern crate serde;
 extern crate serde_json;
-extern crate strum;
 
 pub mod api_types;
 pub mod filter;
