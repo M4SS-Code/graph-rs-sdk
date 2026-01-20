@@ -61,6 +61,7 @@ impl<Credential: Clone + Debug + Send + Sync + TokenCredentialExecutor>
 impl<Credential: Clone + Debug + Send + Sync + TokenCache + TokenCredentialExecutor>
     ClientApplication for ConfidentialClientApplication<Credential>
 {
+    #[cfg(feature = "blocking")]
     fn get_token_silent(&mut self) -> AuthExecutionResult<String> {
         let token = self.credential.get_token_silent()?;
         Ok(token.as_bearer())
@@ -109,6 +110,7 @@ impl<Credential: Clone + Debug + Send + Sync + TokenCredentialExecutor> TokenCre
         self.credential.app_config()
     }
 
+    #[cfg(feature = "blocking")]
     fn execute(&mut self) -> AuthExecutionResult<reqwest::blocking::Response> {
         self.credential.execute()
     }

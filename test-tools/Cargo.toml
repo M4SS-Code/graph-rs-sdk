@@ -21,3 +21,6 @@ graph-core = { path = "../graph-core" }
 graph-http = { path = "../graph-http" }
 graph-error = { path = "../graph-error" }
 graph-rs-sdk = { path = "../", features = ["test-util"] }
+
+[features]
+blocking = ["graph-rs-sdk/blocking"]

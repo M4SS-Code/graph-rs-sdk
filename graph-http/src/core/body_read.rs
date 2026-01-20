@@ -8,6 +8,7 @@ use std::io::{BufReader, Read};
 pub struct BodyRead {
     buf: String,
     bytes_buf: Option<Vec<u8>>,
+    #[cfg(feature = "blocking")]
     blocking_body: Option<reqwest::blocking::Body>,
     async_body: Option<Body>,
 }
@@ -17,13 +18,19 @@ impl BodyRead {
         BodyRead {
             buf,
             bytes_buf: None,
+            #[cfg(feature = "blocking")]
             blocking_body: None,
             async_body: None,
         }
     }
 
     pub fn has_string_buf(&self) -> bool {
-        self.bytes_buf.is_none() && self.blocking_body.is_none() && self.async_body.is_none()
+        #[cfg(feature = "blocking")]
+        let no_blocking = self.blocking_body.is_none();
+        #[cfg(not(feature = "blocking"))]
+        let no_blocking = true;
+
+        self.bytes_buf.is_none() && no_blocking && self.async_body.is_none()
     }
 
     pub fn has_byte_buf(&self) -> bool {
@@ -64,6 +71,7 @@ impl From<BodyRead> for Body {
     }
 }
 
+#[cfg(feature = "blocking")]
 impl From<BodyRead> for reqwest::blocking::Body {
     fn from(body_read: BodyRead) -> Self {
         if let Some(body) = body_read.blocking_body {
@@ -97,6 +105,7 @@ impl From<tokio::fs::File> for BodyRead {
         BodyRead {
             buf: Default::default(),
             bytes_buf: None,
+            #[cfg(feature = "blocking")]
             blocking_body: None,
             async_body: Some(reqwest::Body::from(file)),
         }
@@ -126,6 +135,7 @@ impl From<Vec<u8>> for BodyRead {
         BodyRead {
             buf: Default::default(),
             bytes_buf: Some(value),
+            #[cfg(feature = "blocking")]
             blocking_body: None,
             async_body: None,
         }
@@ -137,12 +147,14 @@ impl From<Body> for BodyRead {
         BodyRead {
             buf: Default::default(),
             bytes_buf: None,
+            #[cfg(feature = "blocking")]
             blocking_body: None,
             async_body: Some(body),
         }
     }
 }
 
+#[cfg(feature = "blocking")]
 impl From<reqwest::blocking::Body> for BodyRead {
     fn from(body: reqwest::blocking::Body) -> Self {
         BodyRead {

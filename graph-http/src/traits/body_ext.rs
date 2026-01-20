@@ -26,6 +26,7 @@ impl BodyExt for reqwest::Body {
     }
 }
 
+#[cfg(feature = "blocking")]
 impl BodyExt for reqwest::blocking::Body {
     fn into_body(self) -> GraphResult<BodyRead> {
         Ok(BodyRead::from(self))

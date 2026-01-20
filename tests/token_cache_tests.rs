@@ -1,3 +1,5 @@
+#![cfg(feature = "blocking")]
+
 use graph_core::cache::TokenCache;
 use std::thread;
 use std::time::Duration;

@@ -1,3 +1,5 @@
+#![cfg(feature = "blocking")]
+
 use test_tools::oauth_request::OAuthTestClient;
 
 // Most OAuth flows for Microsoft Graph require a browser

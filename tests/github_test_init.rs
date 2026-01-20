@@ -1,3 +1,5 @@
+#![cfg(feature = "blocking")]
+
 use graph_core::resource::ResourceIdentity;
 use test_tools::oauth_request::{OAuthTestClient, TestEnv};
 

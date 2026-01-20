@@ -49,6 +49,7 @@ impl From<String> for BearerTokenCredential {
 
 #[async_trait]
 impl ClientApplication for BearerTokenCredential {
+    #[cfg(feature = "blocking")]
     fn get_token_silent(&mut self) -> AuthExecutionResult<String> {
         Ok(self.0.clone())
     }

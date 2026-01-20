@@ -262,11 +262,14 @@ pub mod identity {
 pub mod http {
     pub use graph_core::http::{HttpResponseBuilderExt, HttpResponseExt};
     pub use graph_http::api_impl::{BodyRead, FileConfig, UploadSession};
+    #[cfg(feature = "blocking")]
+    pub use graph_http::traits::ResponseBlockingExt;
     pub use graph_http::traits::{
         AsyncIterator, ODataDeltaLink, ODataDownloadLink, ODataMetadataLink, ODataNextLink,
-        ODataQuery, ResponseBlockingExt, ResponseExt, UploadSessionLink,
+        ODataQuery, ResponseExt, UploadSessionLink,
     };
 
+    #[cfg(feature = "blocking")]
     pub mod blocking {
         pub use graph_http::api_impl::UploadSessionBlocking;
         pub use reqwest::blocking::Body;

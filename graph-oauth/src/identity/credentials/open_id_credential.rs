@@ -9,9 +9,11 @@ use reqwest::IntoUrl;
 use url::Url;
 use uuid::Uuid;
 
+#[cfg(feature = "blocking")]
+use graph_core::http::ResponseConverterExt;
 use graph_core::{
     crypto::{GenPkce, ProofKeyCodeExchange},
-    http::{AsyncResponseConverterExt, ResponseConverterExt},
+    http::AsyncResponseConverterExt,
     identity::ForceTokenRefresh,
 };
 
@@ -119,6 +121,7 @@ impl OpenIdCredential {
         self.pkce.as_ref()
     }
 
+    #[cfg(feature = "blocking")]
     fn execute_cached_token_refresh(&mut self, cache_id: String) -> AuthExecutionResult<Token> {
         let response = self.execute()?;
 
@@ -165,6 +168,7 @@ impl OpenIdCredential {
 impl TokenCache for OpenIdCredential {
     type Token = Token;
 
+    #[cfg(feature = "blocking")]
     fn get_token_silent(&mut self) -> Result<Self::Token, AuthExecutionError> {
         let cache_id = self.app_config.cache_id.to_string();
 

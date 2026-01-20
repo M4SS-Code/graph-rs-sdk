@@ -491,6 +491,7 @@ impl TryFrom<&str> for Token {
     }
 }
 
+#[cfg(feature = "blocking")]
 impl TryFrom<reqwest::blocking::RequestBuilder> for Token {
     type Error = GraphFailure;
 
@@ -500,6 +501,7 @@ impl TryFrom<reqwest::blocking::RequestBuilder> for Token {
     }
 }
 
+#[cfg(feature = "blocking")]
 impl TryFrom<Result<reqwest::blocking::Response, reqwest::Error>> for Token {
     type Error = GraphFailure;
 
@@ -511,6 +513,7 @@ impl TryFrom<Result<reqwest::blocking::Response, reqwest::Error>> for Token {
     }
 }
 
+#[cfg(feature = "blocking")]
 impl TryFrom<reqwest::blocking::Response> for Token {
     type Error = GraphFailure;
 

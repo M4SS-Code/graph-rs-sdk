@@ -36,7 +36,7 @@ workspace = true
 unsafe_code = "forbid"
 
 [dependencies]
-reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "blocking", "stream"] }
+reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "stream"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 url = "2"
@@ -61,6 +61,7 @@ brotli = ["reqwest/brotli", "graph-http/brotli", "graph-oauth/brotli", "graph-co
 deflate = ["reqwest/deflate", "graph-http/deflate", "graph-oauth/deflate", "graph-core/deflate"]
 trust-dns = ["reqwest/trust-dns", "graph-http/trust-dns", "graph-oauth/trust-dns", "graph-core/trust-dns"]
 socks = ["reqwest/socks", "graph-http/socks", "graph-oauth/socks", "graph-core/socks"]
+blocking = ["reqwest/blocking", "graph-http/blocking", "graph-oauth/blocking", "graph-core/blocking", "test-tools/blocking"]
 openssl = ["graph-oauth/openssl"]
 interactive-auth = ["graph-oauth/interactive-auth"]
 test-util = ["graph-http/test-util"]

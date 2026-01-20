@@ -1,3 +1,5 @@
+#![cfg(feature = "blocking")]
+
 use std::thread;
 use std::time::Duration;
 use test_tools::oauth_request::OAuthTestClient;

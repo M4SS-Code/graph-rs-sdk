@@ -17,9 +17,9 @@ use crate::identity::{
     PublicClientApplication, Token, TokenCredentialExecutor,
 };
 use crate::oauth_serializer::{AuthParameter, AuthSerializer};
-use graph_core::http::{
-    AsyncResponseConverterExt, HttpResponseExt, JsonHttpResponse, ResponseConverterExt,
-};
+#[cfg(feature = "blocking")]
+use graph_core::http::ResponseConverterExt;
+use graph_core::http::{AsyncResponseConverterExt, HttpResponseExt, JsonHttpResponse};
 use graph_error::{
     AuthExecutionError, AuthExecutionResult, AuthTaskExecutionResult, AuthorizationFailure,
     IdentityResult,
@@ -91,6 +91,7 @@ impl DeviceCodeCredential {
         DeviceCodeCredentialBuilder::new(client_id.as_ref())
     }
 
+    #[cfg(feature = "blocking")]
     fn execute_cached_token_refresh(&mut self, cache_id: String) -> AuthExecutionResult<Token> {
         let response = self.execute()?;
 
@@ -145,6 +146,7 @@ impl Debug for DeviceCodeCredential {
 impl TokenCache for DeviceCodeCredential {
     type Token = Token;
 
+    #[cfg(feature = "blocking")]
     fn get_token_silent(&mut self) -> Result<Self::Token, AuthExecutionError> {
         let cache_id = self.app_config.cache_id.to_string();
 
@@ -384,6 +386,7 @@ impl DeviceCodePollingExecutor {
         self
     }
 
+    #[cfg(feature = "blocking")]
     pub fn poll(&mut self) -> AuthExecutionResult<std::sync::mpsc::Receiver<JsonHttpResponse>> {
         let (sender, receiver) = std::sync::mpsc::channel();
 

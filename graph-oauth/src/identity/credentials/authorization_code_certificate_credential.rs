@@ -9,7 +9,9 @@ use url::Url;
 use uuid::Uuid;
 
 use graph_core::cache::{CacheStore, InMemoryCacheStore, TokenCache};
-use graph_core::http::{AsyncResponseConverterExt, ResponseConverterExt};
+use graph_core::http::AsyncResponseConverterExt;
+#[cfg(feature = "blocking")]
+use graph_core::http::ResponseConverterExt;
 use graph_core::identity::ForceTokenRefresh;
 use graph_error::{AuthExecutionError, AuthExecutionResult, IdentityResult, AF};
 
@@ -154,6 +156,7 @@ impl AuthorizationCodeCertificateCredential {
         AuthCodeAuthorizationUrlParameterBuilder::new(client_id)
     }
 
+    #[cfg(feature = "blocking")]
     fn execute_cached_token_refresh(&mut self, cache_id: String) -> AuthExecutionResult<Token> {
         let response = self.execute()?;
 
@@ -200,6 +203,7 @@ impl AuthorizationCodeCertificateCredential {
 impl TokenCache for AuthorizationCodeCertificateCredential {
     type Token = Token;
 
+    #[cfg(feature = "blocking")]
     fn get_token_silent(&mut self) -> Result<Self::Token, AuthExecutionError> {
         let cache_id = self.app_config.cache_id.to_string();
 

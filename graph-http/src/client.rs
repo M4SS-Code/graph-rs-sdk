@@ -1,3 +1,4 @@
+#[cfg(feature = "blocking")]
 use crate::blocking::BlockingClient;
 use graph_core::identity::{ClientApplication, ForceTokenRefresh};
 use reqwest::header::{HeaderMap, HeaderValue, ACCEPT, USER_AGENT};
@@ -290,6 +291,7 @@ impl GraphClientConfiguration {
         builder.build().unwrap()
     }
 
+    #[cfg(feature = "blocking")]
     fn build_blocking_http_client(&self) -> reqwest::blocking::Client {
         let headers = self.config.headers.clone();
         let mut builder = reqwest::blocking::ClientBuilder::new()
@@ -337,6 +339,7 @@ impl GraphClientConfiguration {
         }
     }
 
+    #[cfg(feature = "blocking")]
     pub(crate) fn build_blocking(self) -> BlockingClient {
         let headers = self.config.headers.clone();
         let client = self.build_blocking_http_client();
@@ -367,6 +370,7 @@ impl GraphClientConfiguration {
         }
     }
 
+    #[cfg(feature = "blocking")]
     pub(crate) fn build_minimal_blocking_client(self) -> MinimalBlockingClient {
         let config = self.clone();
         let client = self.build_blocking();
@@ -471,18 +475,21 @@ impl Default for MinimalAsyncClient {
     }
 }
 
+#[cfg(feature = "blocking")]
 #[derive(Clone)]
 pub struct MinimalBlockingClient {
     pub inner: reqwest::blocking::Client,
     pub builder: GraphClientConfiguration,
 }
 
+#[cfg(feature = "blocking")]
 impl From<GraphClientConfiguration> for MinimalBlockingClient {
     fn from(value: GraphClientConfiguration) -> Self {
         value.build_minimal_blocking_client()
     }
 }
 
+#[cfg(feature = "blocking")]
 impl Default for MinimalBlockingClient {
     fn default() -> Self {
         GraphClientConfiguration::new().build_minimal_blocking_client()

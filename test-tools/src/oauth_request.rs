@@ -195,6 +195,7 @@ pub enum OAuthTestClient {
 }
 
 impl OAuthTestClient {
+    #[cfg(feature = "blocking")]
     fn get_access_token(&self, creds: OAuthTestCredentials) -> Option<(String, Token)> {
         let user_id = creds.user_id.clone()?;
         match self {
@@ -268,6 +269,7 @@ impl OAuthTestClient {
         }
     }
 
+    #[cfg(feature = "blocking")]
     pub fn request_access_token(&self) -> Option<(String, Token)> {
         if Environment::is_local() || Environment::is_travis() || Environment::is_github() {
             let map = OAuthTestClient::get_app_registration()?;
@@ -322,6 +324,7 @@ impl OAuthTestClient {
         }
     }
 
+    #[cfg(feature = "blocking")]
     pub fn graph_by_rid(resource_identity: ResourceIdentity) -> Option<(String, Graph)> {
         let app_registration = OAuthTestClient::get_app_registration()?;
         let client = app_registration.get_by_resource_identity(resource_identity)?;
@@ -396,6 +399,7 @@ impl OAuthTestClient {
         }
     }
 
+    #[cfg(feature = "blocking")]
     pub fn token(resource_identity: ResourceIdentity) -> Option<Token> {
         let app_registration = OAuthTestClient::get_app_registration()?;
         let client = app_registration.get_by_resource_identity(resource_identity)?;

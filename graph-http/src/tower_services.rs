@@ -108,7 +108,9 @@ impl<T: Unpin> Future for WaitBeforeRetry<T> {
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<T> {
         match self.sleep.as_mut().poll(cx) {
             Poll::Pending => Poll::Pending,
-            Poll::Ready(()) => Poll::Ready(self.inner.take().expect("Ready polled after completion")),
+            Poll::Ready(()) => {
+                Poll::Ready(self.inner.take().expect("Ready polled after completion"))
+            }
         }
     }
 }

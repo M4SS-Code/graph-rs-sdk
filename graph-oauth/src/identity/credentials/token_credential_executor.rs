@@ -6,7 +6,9 @@ use async_trait::async_trait;
 use dyn_clone::DynClone;
 use graph_error::AuthExecutionError;
 use graph_error::{AuthExecutionResult, IdentityResult};
-use graph_http::api_impl::{GraphClientConfiguration, MinimalAsyncClient, MinimalBlockingClient};
+#[cfg(feature = "blocking")]
+use graph_http::api_impl::MinimalBlockingClient;
+use graph_http::api_impl::{GraphClientConfiguration, MinimalAsyncClient};
 use reqwest::header::HeaderMap;
 use std::collections::HashMap;
 use std::fmt::Debug;
@@ -38,6 +40,7 @@ pub trait TokenCredentialExecutor: DynClone + Debug {
         Ok(auth_request)
     }
 
+    #[cfg(feature = "blocking")]
     fn build_request(
         &mut self,
     ) -> AuthExecutionResult<(reqwest::blocking::RequestBuilder, MinimalBlockingClient)> {
@@ -142,6 +145,7 @@ pub trait TokenCredentialExecutor: DynClone + Debug {
         &self.app_config().config
     }
 
+    #[cfg(feature = "blocking")]
     fn execute(&mut self) -> AuthExecutionResult<reqwest::blocking::Response> {
         let (request_builder, minimal_blocking_client) = self.build_request()?;
         let request = request_builder.build()?;

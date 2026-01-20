@@ -1,3 +1,5 @@
+#![cfg(feature = "blocking")]
+
 use graph_rs_sdk::*;
 use std::thread;
 use std::time::Duration;

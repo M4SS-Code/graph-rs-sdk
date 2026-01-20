@@ -5,6 +5,7 @@ mod body_ext;
 mod byte_range;
 mod odata_link;
 mod odata_query;
+#[cfg(feature = "blocking")]
 mod response_blocking_ext;
 mod response_ext;
 
@@ -15,5 +16,6 @@ pub use body_ext::*;
 pub use byte_range::*;
 pub use odata_link::*;
 pub use odata_query::*;
+#[cfg(feature = "blocking")]
 pub use response_blocking_ext::*;
 pub use response_ext::*;

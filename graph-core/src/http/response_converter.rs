@@ -43,12 +43,14 @@ impl AsyncResponseConverterExt for reqwest::Response {
     }
 }
 
+#[cfg(feature = "blocking")]
 pub trait ResponseConverterExt {
     fn into_http_response<T: DeserializeOwned>(
         self,
     ) -> AuthExecutionResult<http::Response<Result<T, ErrorMessage>>>;
 }
 
+#[cfg(feature = "blocking")]
 impl ResponseConverterExt for reqwest::blocking::Response {
     fn into_http_response<T: DeserializeOwned>(
         self,

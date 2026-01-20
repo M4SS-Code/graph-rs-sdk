@@ -22,6 +22,7 @@ impl AsBearer for &str {
 pub trait TokenCache {
     type Token: AsBearer;
 
+    #[cfg(feature = "blocking")]
     fn get_token_silent(&mut self) -> Result<Self::Token, AuthExecutionError>;
 
     async fn get_token_silent_async(&mut self) -> Result<Self::Token, AuthExecutionError>;

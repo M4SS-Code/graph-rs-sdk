@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate serde;
 
+#[cfg(feature = "blocking")]
 mod blocking;
 mod client;
 mod core;
@@ -35,6 +36,7 @@ pub(crate) mod internal {
 }
 
 pub mod api_impl {
+    #[cfg(feature = "blocking")]
     pub use crate::blocking::{BlockingClient, BlockingRequestHandler, UploadSessionBlocking};
     pub use crate::client::*;
     pub use crate::core::*;
