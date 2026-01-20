@@ -1,12 +1,7 @@
 use crate::openapi::{Contact, License};
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [Info Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#infoObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Info {
     /// REQUIRED. The title of the API.

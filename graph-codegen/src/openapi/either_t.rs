@@ -6,13 +6,8 @@ use crate::{
     },
 };
 use either::Either;
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
-#[derive(Debug, Clone, Serialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Serialize)]
 pub struct EitherT<T, U> {
     either: Either<T, U>,
 }

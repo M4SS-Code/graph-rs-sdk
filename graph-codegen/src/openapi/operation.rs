@@ -7,18 +7,14 @@ use crate::{
     },
     traits::RequestParser,
 };
-use from_as::*;
+
 use graph_core::resource::ResourceIdentity;
 use heck::{ToLowerCamelCase, ToUpperCamelCase};
+use std::collections::{HashMap, VecDeque};
 use std::str::FromStr;
-use std::{
-    collections::{HashMap, VecDeque},
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [Operation Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#operation-object)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Operation {
     /// A list of tags for API documentation control. Tags can be used for

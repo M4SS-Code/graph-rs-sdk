@@ -1,13 +1,9 @@
 use crate::parser::RequestSet;
-use from_as::*;
-use heck::ToLowerCamelCase;
-use std::{
-    collections::{BTreeSet, HashMap, VecDeque},
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize, FromFile, AsFile)]
+use heck::ToLowerCamelCase;
+use std::collections::{BTreeSet, HashMap, VecDeque};
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct ResourceNames {
     pub names: BTreeSet<String>,
 }
@@ -79,7 +75,7 @@ impl From<HashMap<String, RequestSet>> for ResourceNames {
     }
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct ResourceNameMapping {
     pub map: HashMap<String, BTreeSet<String>>,
 }

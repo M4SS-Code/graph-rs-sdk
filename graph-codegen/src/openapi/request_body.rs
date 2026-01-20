@@ -1,13 +1,9 @@
 use crate::openapi::MediaType;
-use from_as::*;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::HashMap;
 
 /// [Request Body Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#request-body-object)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct RequestBody {
     /// A brief description of the request body. This could contain examples of
     /// use. CommonMark syntax MAY be used for rich text representation.

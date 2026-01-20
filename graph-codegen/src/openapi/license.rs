@@ -1,11 +1,5 @@
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
-
 /// [License Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#licenseObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct License {
     /// REQUIRED. The license name used for the API.
     #[serde(skip_serializing_if = "Option::is_none")]

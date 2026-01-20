@@ -1,13 +1,9 @@
 use crate::openapi::{EitherT, Header, Reference};
-use from_as::*;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::HashMap;
 
 /// [Encoding Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#encodingObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Encoding {
     /// The Content-Type for encoding a specific property. Default value depends

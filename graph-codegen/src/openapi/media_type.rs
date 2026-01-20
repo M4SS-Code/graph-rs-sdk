@@ -1,13 +1,9 @@
 use crate::openapi::{EitherT, Encoding, Example, Reference, Schema};
-use from_as::*;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::HashMap;
 
 /// [Media Type Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#media-type-object)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct MediaType {
     // The schema defining the content of the request, response, or parameter.
     #[serde(skip_serializing_if = "Option::is_none")]

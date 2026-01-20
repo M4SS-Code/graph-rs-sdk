@@ -1,12 +1,7 @@
 use crate::openapi::OAuthFlows;
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [Security Schemes Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#securitySchemeObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SecurityScheme {
     /// REQUIRED. The type of the security scheme. Valid values are "apiKey",

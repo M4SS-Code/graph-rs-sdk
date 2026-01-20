@@ -6,14 +6,13 @@ use crate::macros::{MacroImplWriter, MacroQueueWriter};
 use crate::openapi::{OpenApi, PathItem};
 use crate::parser::HttpMethod;
 use crate::traits::{FilterMetadata, RequestParser, INTERNAL_PATH_ID};
-use from_as::*;
+
 use graph_core::resource::ResourceIdentity;
 use heck::{ToSnakeCase, ToUpperCamelCase};
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, VecDeque};
-use std::io::{Read, Write};
 use std::str::FromStr;
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct RequestMetadata {
     pub has_body: bool,
     pub request_task: RequestTask,
@@ -174,7 +173,7 @@ impl MetadataModifier for RequestMetadata {
     }
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct PathMetadata {
     pub path: String,
     pub param_size: usize,
@@ -470,13 +469,13 @@ impl MacroQueueWriter for PathMetadata {
     }
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct PathMetadataMap(BTreeMap<String, VecDeque<PathMetadata>>);
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct PathItemMap(BTreeMap<String, PathItem>);
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct PathMetadataQueue(VecDeque<PathMetadata>);
 
 impl PathMetadataQueue {

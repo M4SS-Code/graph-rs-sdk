@@ -1,11 +1,10 @@
-use from_as::FromAsError;
 use std::fmt::Formatter;
 
 #[derive(Debug)]
 pub enum ParseError {
     DeserializeMatchTarget,
     ReqwestError(reqwest::Error),
-    FromAsError(FromAsError),
+    IoError(std::io::Error),
     Path,
     Unknown,
 }
@@ -17,7 +16,7 @@ impl std::fmt::Display for ParseError {
                 write!(f, "Failed to parse MatchTarget. String is in wrong format.")
             }
             ParseError::ReqwestError(err) => err.fmt(f),
-            ParseError::FromAsError(err) => err.fmt(f),
+            ParseError::IoError(err) => err.fmt(f),
             ParseError::Path => write!(f, "Failed to parse path."),
             ParseError::Unknown => write!(f, "Either the error is unknown or is irrelevant"),
         }
@@ -32,9 +31,9 @@ impl From<reqwest::Error> for ParseError {
     }
 }
 
-impl From<FromAsError> for ParseError {
-    fn from(err: FromAsError) -> Self {
-        ParseError::FromAsError(err)
+impl From<std::io::Error> for ParseError {
+    fn from(err: std::io::Error) -> Self {
+        ParseError::IoError(err)
     }
 }
 

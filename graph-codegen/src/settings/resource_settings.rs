@@ -1,11 +1,10 @@
 use crate::api_types::{WriteConfiguration, WriteConfigurationBuilder};
 use crate::settings::{ApiClientLink, ApiClientLinkSettings};
-use from_as::*;
+
 use graph_core::resource::ResourceIdentity;
 use std::collections::BTreeMap;
-use std::io::Write;
 
-#[derive(Builder, Debug, Default, Clone, Eq, PartialEq, Serialize, AsFile, Hash)]
+#[derive(Builder, Debug, Default, Clone, Eq, PartialEq, Serialize, Hash)]
 #[builder(
     pattern = "mutable",
     derive(Debug, Eq, PartialEq, Serialize),
@@ -1281,7 +1280,7 @@ impl ResourceSettings {
     }
 }
 
-#[derive(Default, Debug, Clone, Serialize, AsFile, Eq, PartialEq, Hash)]
+#[derive(Default, Debug, Clone, Serialize, Eq, PartialEq, Hash)]
 pub struct ResourceSettingsMap(pub BTreeMap<ResourceIdentity, ResourceSettings>);
 
 pub fn get_me_filter() -> Vec<&'static str> {

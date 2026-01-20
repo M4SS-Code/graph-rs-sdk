@@ -1,7 +1,4 @@
-use from_as::*;
-use std::io::{Read, Write};
-
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum FilterIgnore {
     PathContains(String),
     PathContainsMulti(Vec<String>),
@@ -9,7 +6,7 @@ pub enum FilterIgnore {
     PathEquals(String),
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum Filter {
     None,
     PathStartsWith(String),

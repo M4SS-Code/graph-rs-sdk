@@ -1,12 +1,7 @@
 use crate::openapi::OAuthFlow;
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [OAuth Flows Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#oauth-flows-object)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OAuthFlows {
     /// Configuration for the OAuth Implicit flow

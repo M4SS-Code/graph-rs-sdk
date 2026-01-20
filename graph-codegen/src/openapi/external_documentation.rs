@@ -1,11 +1,5 @@
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
-
 /// [External Documentation Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#externalDocumentationObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct ExternalDocumentation {
     /// A description of the target documentation. CommonMark syntax MAY be used
     /// for rich text representation.

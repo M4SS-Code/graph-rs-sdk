@@ -1,13 +1,9 @@
 use crate::openapi::ServerVariable;
-use from_as::*;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::HashMap;
 
 /// [Server Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#serverObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct Server {
     /// REQUIRED. A URL to the target host. This URL supports Server Variables
     /// and MAY be relative, to indicate that the host location is relative

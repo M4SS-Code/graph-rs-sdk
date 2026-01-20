@@ -1,15 +1,14 @@
 use crate::api_types::RequestMetadata;
 use crate::parser::Request;
 use crate::traits::INTERNAL_PATH_ID;
-use from_as::*;
+
 use std::collections::HashMap;
-use std::io::{Read, Write};
 
 pub enum UpdateOperationMap {
     PathStartsWith(String),
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, FromFile, AsFile, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, Hash)]
 pub enum MatchTarget {
     OperationId(String),
     OperationMap(String),

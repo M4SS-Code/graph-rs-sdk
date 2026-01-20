@@ -1,12 +1,7 @@
-use from_as::*;
-use std::{
-    collections::{HashMap, VecDeque},
-    convert::TryFrom,
-    io::{Read, Write},
-};
+use std::collections::{HashMap, VecDeque};
 
 /// [Server Variable Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#server-variable-object)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct ServerVariable {
     /// An enumeration of string values to be used if the substitution options
     /// are from a limited set. The array MUST NOT be empty.

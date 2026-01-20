@@ -1,17 +1,17 @@
 use bytes::{BufMut, BytesMut};
-use from_as::*;
+
 use graph_core::resource::ResourceIdentity;
 use graph_error::{GraphFailure, GraphResult};
 use graph_http::io_tools::create_dir;
 use heck::ToSnakeCase;
 use std::collections::HashSet;
 use std::fs::OpenOptions;
-use std::io::{Read, Write};
+use std::io::Write;
 use std::path::{Path, PathBuf};
 
 static BASE_MOD_DECLARATION: &str = "request";
 
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum ModFile {
     /// Create the mod and use declarations for a mod file.
     Declarations {
@@ -89,9 +89,7 @@ impl ModFile {
     }
 }
 
-#[derive(
-    Default, Builder, Debug, Clone, Eq, PartialEq, Serialize, Deserialize, FromFile, AsFile,
-)]
+#[derive(Default, Builder, Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 #[builder(setter(into, strip_option), default)]
 pub struct ModFileWriter {
     file: PathBuf,

@@ -1,15 +1,11 @@
 use crate::api_types::RequestTask;
 use crate::openapi::{EitherT, Reference, Response};
 use crate::traits::RequestParser;
-use from_as::*;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::HashMap;
 
 /// [Responses Object](hhttps://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#responsesObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct Responses {
     /// The documentation of responses other than the ones declared for specific
     /// HTTP response codes. Use this field to cover undeclared responses. A

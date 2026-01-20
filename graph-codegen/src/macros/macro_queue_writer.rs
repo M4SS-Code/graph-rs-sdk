@@ -3,11 +3,11 @@ use crate::api_types::{
     RequestTask,
 };
 use crate::api_types::{ModWriteConfiguration, WriteConfiguration};
+use crate::json_file::write_json_pretty;
 use crate::openapi::OpenApi;
 use crate::settings::{get_method_macro_modifiers, ResourceSettings};
 use anyhow::anyhow;
 use bytes::{BufMut, BytesMut};
-use from_as::*;
 use graph_core::resource::ResourceIdentity;
 use graph_http::io_tools::create_dir;
 use heck::{ToLowerCamelCase, ToSnakeCase, ToUpperCamelCase};
@@ -682,11 +682,10 @@ pub trait OpenApiParser {
     fn write_metadata<P: AsRef<Path>>(
         resource_parsing_info: WriteConfiguration,
         path: &P,
-    ) -> Result<(), FromAsError> {
+    ) -> std::io::Result<()> {
         let metadata_queue = PathMetadataQueue::from(resource_parsing_info);
         metadata_queue.debug_print();
-        let path_buf = path.as_ref().to_path_buf();
-        metadata_queue.as_file_pretty(path_buf)
+        write_json_pretty(path, &metadata_queue)
     }
 
     fn get_metadata_method_macros(

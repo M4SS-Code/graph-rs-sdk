@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use from_as::*;
+use crate::json_file::read_json;
 use graph_core::resource::ResourceIdentity;
 use graph_rs_sdk::identity::{
     ClientSecretCredential, ConfidentialClientApplication, ResourceOwnerPasswordCredential, Token,
@@ -8,9 +8,7 @@ use graph_rs_sdk::identity::{
 };
 use graph_rs_sdk::{Graph, GraphClient};
 use std::collections::{BTreeMap, HashMap};
-use std::convert::TryFrom;
 use std::env;
-use std::io::{Read, Write};
 use std::sync::LazyLock;
 
 use graph_core::identity::ClientApplication;
@@ -73,7 +71,7 @@ pub static DEFAULT_ONENOTE_CREDENTIALS_MUTEX: LazyLock<tokio::sync::Mutex<GraphT
 
 //pub const APPLICATIONS_CLIENT: Mutex<Option<(String, Graph)>> = Mutex::new(OAuthTestClient::graph_by_rid(ResourceIdentity::Applications));
 
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, AsFile, FromFile, Default)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Default)]
 pub enum TestEnv {
     AppVeyor,
     GitHub,
@@ -127,7 +125,7 @@ impl Environment {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Hash, AsFile, FromFile)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Hash)]
 pub struct OAuthTestCredentials {
     client_id: String,
     client_secret: String,
@@ -189,7 +187,7 @@ impl OAuthTestCredentials {
     }
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Hash, AsFile, FromFile)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, Hash)]
 pub enum OAuthTestClient {
     ClientCredentials,
     ResourceOwnerPasswordCredentials,
@@ -314,7 +312,7 @@ impl OAuthTestClient {
 
     pub fn get_app_registration() -> Option<AppRegistrationMap> {
         if Environment::is_local() {
-            AppRegistrationMap::from_file("./app_registrations.json").ok()
+            read_json("./app_registrations.json").ok()
         } else if Environment::is_github() {
             let app_reg: AppRegistrationMap =
                 serde_json::from_str(&env::var("APP_REGISTRATIONS").ok()?).ok()?;
@@ -411,7 +409,7 @@ impl OAuthTestClient {
     }
 }
 
-#[derive(Default, Debug, Clone, Eq, PartialEq, Serialize, Deserialize, AsFile, FromFile)]
+#[derive(Default, Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct OAuthTestClientMap {
     clients: HashMap<OAuthTestClient, OAuthTestCredentials>,
 }
@@ -459,7 +457,7 @@ impl AsMut<HashMap<OAuthTestClient, OAuthTestCredentials>> for OAuthTestClientMa
     }
 }
 
-#[derive(Default, Debug, Clone, Eq, PartialEq, Serialize, Deserialize, AsFile, FromFile)]
+#[derive(Default, Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct AppRegistrationClient {
     display_name: String,
     permissions: Vec<String>,
@@ -515,7 +513,7 @@ pub trait GetAppRegistration {
     fn get_default_client_credentials(&self) -> AppRegistrationClient;
 }
 
-#[derive(Default, Debug, Clone, Eq, PartialEq, Serialize, Deserialize, AsFile, FromFile)]
+#[derive(Default, Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct AppRegistrationMap {
     apps: BTreeMap<String, AppRegistrationClient>,
 }

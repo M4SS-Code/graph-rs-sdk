@@ -1,13 +1,9 @@
 use crate::openapi::{Discriminator, EitherT, ExternalDocumentation, Reference, XML};
-use from_as::*;
-use std::{
-    collections::{HashMap, HashSet, VecDeque},
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::{HashMap, HashSet, VecDeque};
 
 /// [Schema Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schemaObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Schema {
     #[serde(skip_serializing_if = "Option::is_none")]

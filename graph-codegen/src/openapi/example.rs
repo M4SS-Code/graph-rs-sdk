@@ -1,11 +1,5 @@
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
-
 /// [Example Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#example-object)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Example {
     /// Short description for the example.

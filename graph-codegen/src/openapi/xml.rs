@@ -1,11 +1,5 @@
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
-
 /// [XML Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#xmlObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct XML {
     /// Replaces the name of the element/attribute used for the described schema
     /// property. When defined within items, it will affect the name of the

@@ -1,11 +1,10 @@
 use crate::parser::error::ParseError;
 use crate::parser::{HttpMethod, Request};
 use crate::traits::HashMapExt;
-use from_as::*;
+
 use heck::{ToSnakeCase, ToUpperCamelCase};
 use regex::Regex;
 use std::collections::{HashMap, HashSet, VecDeque};
-use std::io::{Read, Write};
 use std::str::FromStr;
 use std::sync::LazyLock;
 
@@ -73,7 +72,7 @@ pub static API_METHOD_MACRO: LazyLock<Regex> =
 // (\w+!\(\{)(\w+:+)(\}\);)
 // (\w+!(\{)(\w+:[0-9])(});)
 // ^(?:\w+!\(\{)*
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub enum PathMatcher {
     PathId,
     PathIdNamed,

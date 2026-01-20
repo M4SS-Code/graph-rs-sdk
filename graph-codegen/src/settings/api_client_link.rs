@@ -1,13 +1,7 @@
-use from_as::*;
-
-use std::io::{Read, Write};
-
-#[derive(Debug, Clone, Serialize, Deserialize, FromFile, AsFile, Eq, PartialEq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, Hash)]
 pub struct ApiClientLinkSettings(pub Option<&'static str>, pub Vec<ApiClientLink>);
 
-#[derive(
-    Debug, Clone, Serialize, Deserialize, FromFile, AsFile, Eq, PartialEq, Hash, Ord, PartialOrd,
-)]
+#[derive(Debug, Clone, Serialize, Deserialize, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub enum ApiClientLink {
     Struct(&'static str, &'static str),
     StructId(&'static str, &'static str),

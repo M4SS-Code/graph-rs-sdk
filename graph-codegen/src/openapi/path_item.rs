@@ -2,17 +2,13 @@ use crate::api_types::{PathMetadata, RequestMetadata};
 use crate::openapi::{EitherT, Operation, Parameter, Reference, Server};
 use crate::parser::HttpMethod;
 use crate::traits::{PathMatcher, RequestParser};
-use from_as::*;
+
 use heck::ToSnakeCase;
+use std::collections::VecDeque;
 use std::collections::{HashMap, HashSet};
-use std::{
-    collections::VecDeque,
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [Path Item Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#pathItemObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct PathItem {
     /// Allows for a referenced definition of this path item. The referenced
     /// structure MUST be in the form of a Path Item Object. In case a Path

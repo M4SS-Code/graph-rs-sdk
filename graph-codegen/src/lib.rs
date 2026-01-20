@@ -5,12 +5,12 @@ pub extern crate heck;
 extern crate derive_builder;
 #[macro_use]
 extern crate serde;
-extern crate from_as;
 extern crate serde_json;
 extern crate strum;
 
 pub mod api_types;
 pub mod filter;
+pub mod json_file;
 pub mod macros;
 pub mod openapi;
 pub mod parser;

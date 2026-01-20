@@ -1,17 +1,16 @@
 use crate::api_types::RequestMetadata;
 use crate::traits::RequestParser;
-use from_as::*;
-use std::collections::{BTreeMap, VecDeque};
-use std::io::{Read, Write};
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+use std::collections::{BTreeMap, VecDeque};
+
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct RequestClient {
     pub name: String,
     pub requests: VecDeque<RequestMetadata>,
     pub links: Vec<String>,
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct RequestClientList {
     pub clients: BTreeMap<String, VecDeque<RequestMetadata>>,
     pub client_list: VecDeque<RequestClient>,

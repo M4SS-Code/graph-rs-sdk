@@ -2,32 +2,18 @@ use crate::{
     parser::{ResourceNameMapping, ResourceNames},
     traits::{HashMapExt, RequestParser},
 };
-use from_as::*;
+
 use heck::ToLowerCamelCase;
 use std::{
     collections::{
         hash_set::{Difference, Iter},
         BTreeMap, BTreeSet, HashMap, HashSet, VecDeque,
     },
-    convert::TryFrom,
     hash::{Hash, Hasher},
-    io::{Read, Write},
 };
 
 #[derive(
-    Debug,
-    Default,
-    Copy,
-    Clone,
-    Serialize,
-    Deserialize,
-    Ord,
-    PartialOrd,
-    FromFile,
-    AsFile,
-    Eq,
-    PartialEq,
-    Hash,
+    Debug, Default, Copy, Clone, Serialize, Deserialize, Ord, PartialOrd, Eq, PartialEq, Hash,
 )]
 pub enum HttpMethod {
     #[default]
@@ -86,19 +72,7 @@ impl ToString for HttpMethod {
 
 #[deprecated]
 #[derive(
-    Debug,
-    Default,
-    Copy,
-    Clone,
-    Serialize,
-    Deserialize,
-    Eq,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    FromFile,
-    AsFile,
-    Hash,
+    Debug, Default, Copy, Clone, Serialize, Deserialize, Eq, PartialEq, Ord, PartialOrd, Hash,
 )]
 pub enum ResponseType {
     #[default]
@@ -163,19 +137,7 @@ impl ToString for ResponseType {
 }
 
 #[derive(
-    Default,
-    Eq,
-    PartialEq,
-    Hash,
-    Debug,
-    Copy,
-    Clone,
-    Serialize,
-    Deserialize,
-    Ord,
-    PartialOrd,
-    FromFile,
-    AsFile,
+    Default, Eq, PartialEq, Hash, Debug, Copy, Clone, Serialize, Deserialize, Ord, PartialOrd,
 )]
 pub enum RequestType {
     #[default]
@@ -187,20 +149,7 @@ pub enum RequestType {
 }
 
 #[deprecated]
-#[derive(
-    Eq,
-    PartialEq,
-    Hash,
-    Debug,
-    Default,
-    Clone,
-    Serialize,
-    Deserialize,
-    Ord,
-    PartialOrd,
-    FromFile,
-    AsFile,
-)]
+#[derive(Eq, PartialEq, Hash, Debug, Default, Clone, Serialize, Deserialize, Ord, PartialOrd)]
 pub struct Request {
     pub path: String,
     pub method: HttpMethod,
@@ -262,7 +211,7 @@ impl ReqSet {
 
 /// RequestMap holds a list of requests that correspond to a URL path
 #[deprecated]
-#[derive(Debug, Default, Clone, Serialize, Deserialize, Ord, PartialOrd, FromFile, AsFile)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, Ord, PartialOrd)]
 pub struct RequestMap {
     pub path: String,
     pub requests: VecDeque<Request>,
@@ -324,7 +273,7 @@ impl RequestMap {
 
 /// RequestSet holds a set of unique RequestMap objects.
 #[deprecated]
-#[derive(Debug, Default, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct RequestSet {
     pub set: HashSet<RequestMap>,
 }

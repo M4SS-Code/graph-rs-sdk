@@ -1,12 +1,7 @@
 use crate::openapi::ExternalDocumentation;
-use from_as::*;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [Tag Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#tagObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
     /// REQUIRED. The name of the tag.

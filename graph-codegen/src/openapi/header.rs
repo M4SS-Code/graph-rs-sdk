@@ -1,10 +1,6 @@
 use crate::openapi::{EitherT, Example, Reference, Schema};
-use from_as::*;
+
 use std::collections::HashMap;
-use std::{
-    convert::TryFrom,
-    io::{Read, Write},
-};
 
 /// [Header Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#header-object)
 ///
@@ -15,7 +11,7 @@ use std::{
 /// * in MUST NOT be specified, it is implicitly in header.
 /// * All traits that are affected by the location MUST be applicable to a
 ///   location of header (for example, style).
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Header {
     /// A brief description of the parameter. This could contain examples of

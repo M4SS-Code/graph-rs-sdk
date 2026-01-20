@@ -1,9 +1,8 @@
 use crate::api_types::RequestTask;
 use crate::parser::HttpMethod;
 use crate::settings::{GeneratedMacroType, MethodMacroModifier};
-use from_as::*;
+
 use heck::ToSnakeCase;
-use std::io::{Read, Write};
 
 /// Represents the macro used for describing requests. This is the outer
 /// most macro and is used to describe all requests.
@@ -17,9 +16,7 @@ use std::io::{Read, Write};
 ///     params: user_activity_id, history_items_id
 /// );
 /// ```
-#[derive(
-    Default, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Serialize, Deserialize, FromFile, AsFile,
-)]
+#[derive(Default, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Serialize, Deserialize)]
 pub struct MethodMacro {
     pub doc_comment: Option<String>,
     pub fn_name: String,

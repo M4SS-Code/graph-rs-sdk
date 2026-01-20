@@ -1,6 +1,3 @@
-use from_as::*;
-use std::io::{Read, Write};
-
 /// Describes the type of action this request will perform. In some instances
 /// the task described is just the return type for the request.
 ///
@@ -11,20 +8,7 @@ use std::io::{Read, Write};
 /// reading a file from a drive while a simple GET request just returns json.
 /// Both the upload session and GET request will have a separate and
 /// specific macro that is used to generate the method for the api clients.
-#[derive(
-    Debug,
-    Default,
-    Clone,
-    Serialize,
-    Deserialize,
-    FromFile,
-    AsFile,
-    Ord,
-    PartialOrd,
-    Eq,
-    PartialEq,
-    Hash,
-)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub enum RequestTask {
     /// 204 no-content response.
     NoContent,

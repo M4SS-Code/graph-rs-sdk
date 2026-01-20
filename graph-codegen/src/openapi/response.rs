@@ -1,14 +1,10 @@
 use crate::api_types::RequestTask;
 use crate::openapi::{EitherT, Header, Link, MediaType, Reference};
-use from_as::*;
-use std::{
-    collections::HashMap,
-    convert::TryFrom,
-    io::{Read, Write},
-};
+
+use std::collections::HashMap;
 
 /// [Response Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#responseObject)
-#[derive(Default, Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct Response {
     /// REQUIRED. A short description of the response. CommonMark syntax MAY be
     /// used for rich text representation.

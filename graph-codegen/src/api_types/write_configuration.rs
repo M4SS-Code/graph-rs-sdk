@@ -1,17 +1,16 @@
 use crate::api_types::ModFile;
 use crate::settings::ApiClientLinkSettings;
-use from_as::*;
-use graph_core::resource::ResourceIdentity;
-use std::io::{Read, Write};
 
-#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize, FromFile, AsFile)]
+use graph_core::resource::ResourceIdentity;
+
+#[derive(Debug, Clone, Eq, PartialEq, Serialize, Deserialize)]
 pub struct ModWriteConfiguration {
     pub folder_path: String,
     pub folder_name: String,
     pub mod_name: String,
 }
 
-#[derive(Builder, Debug, Default, Clone, Eq, PartialEq, Serialize, AsFile)]
+#[derive(Builder, Debug, Default, Clone, Eq, PartialEq, Serialize)]
 #[builder(
     pattern = "mutable",
     derive(Debug, Eq, PartialEq, Serialize),

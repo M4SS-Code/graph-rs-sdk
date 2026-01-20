@@ -59,7 +59,7 @@ pub use xml::*;
 use crate::api_types::{PathMetadata, WriteConfiguration};
 use crate::macros::OpenApiParser;
 use crate::traits::RequestParser;
-use from_as::*;
+
 use graph_error::GraphFailure;
 use graph_http::url::GraphUrl;
 use heck::ToUpperCamelCase;
@@ -70,14 +70,13 @@ use std::collections::{BTreeSet, HashMap};
 use std::{
     collections::{BTreeMap, VecDeque},
     convert::TryFrom,
-    io::{Read, Write},
 };
 
 static MS_GRAPH_METADATA_URL: &str = "https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/v1.0/openapi.yaml";
 // static MS_GRAPH_BETA_METADATA_URL: &str = "https://raw.githubusercontent.com/microsoftgraph/msgraph-metadata/master/openapi/beta/openapi.yaml";
 
 /// [OpenAPI Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#oasObject)
-#[derive(Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OpenApi {
     /// REQUIRED. This string MUST be the version number of the OpenAPI
@@ -441,7 +440,7 @@ impl AsMut<BTreeMap<String, PathItem>> for OpenApi {
 
 impl OpenApiParser for OpenApi {}
 
-#[derive(Debug, Clone, Serialize, Deserialize, FromFile, AsFile)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OpenApiRaw {
     pub open_api: serde_json::Value,
