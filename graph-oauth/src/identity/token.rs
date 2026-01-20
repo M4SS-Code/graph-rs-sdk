@@ -1,6 +1,5 @@
 use graph_error::{AuthorizationFailure, GraphFailure, AF};
 use serde::{Deserialize, Deserializer};
-use serde_aux::prelude::*;
 use serde_json::Value;
 use std::collections::HashMap;
 use std::fmt;
@@ -11,6 +10,22 @@ use crate::identity::{AuthorizationResponse, IdToken};
 use graph_core::{cache::AsBearer, identity::Claims};
 use jsonwebtoken::{Algorithm, DecodingKey, TokenData, Validation};
 use time::OffsetDateTime;
+
+fn deserialize_number_from_string<'de, D>(deserializer: D) -> Result<i64, D::Error>
+where
+    D: Deserializer<'de>,
+{
+    let value: Value = Deserialize::deserialize(deserializer)?;
+    match value {
+        Value::Number(n) => n
+            .as_i64()
+            .ok_or_else(|| serde::de::Error::custom("expected i64")),
+        Value::String(s) => s
+            .parse::<i64>()
+            .map_err(|_| serde::de::Error::custom("expected numeric string")),
+        _ => Err(serde::de::Error::custom("expected number or string")),
+    }
+}
 
 fn deserialize_scope<'de, D>(scope: D) -> Result<Vec<String>, D::Error>
 where
