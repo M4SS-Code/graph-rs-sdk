@@ -23,7 +23,7 @@ base64 = "0.22.0"
 dyn-clone = "1.0.14"
 hex = "0.4.3"
 http = { workspace = true }
-jsonwebtoken = "9.1.0"
+jsonwebtoken = { version = "10", default-features = false, features = ["rust_crypto"] }
 openssl = { version = "0.10", optional=true }
 reqwest = { workspace = true, default-features=false, features = ["form", "json", "gzip", "stream"] }
 serde = { version = "1", features = ["derive"] }
