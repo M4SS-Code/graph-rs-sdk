@@ -1,20 +1,18 @@
 use base64::engine::general_purpose::URL_SAFE_NO_PAD;
 use base64::Engine;
 use graph_error::{IdentityResult, AF};
-use ring::rand::SecureRandom;
+use graviola::hashing::{Hash, HashContext, Sha256};
 
 /*
 pub(crate) fn sha256_secure_string() -> IdentityResult<(String, String)> {
     let mut buf = [0; 32];
 
-    let rng = ring::rand::SystemRandom::new();
-    rng.fill(&mut buf)
-        .map_err(|_| AuthorizationFailure::unknown("ring::error::Unspecified"))?;
+    graviola::random::fill(&mut buf);
 
     // Known as code_verifier in proof key for code exchange
     let base_64_random_string = URL_SAFE_NO_PAD.encode(buf);
 
-    let mut context = ring::digest::Context::new(&ring::digest::SHA256);
+    let mut context = Sha256::new();
     context.update(base_64_random_string.as_bytes());
 
     // Known as code_challenge in proof key for code exchange
@@ -31,19 +29,17 @@ pub trait GenPkce {
     }
 
     /// Known as code_verifier in proof key for code exchange
-    /// Uses the Rust ring crypto library to generate a secure random
-    /// 32-octet sequence that is base64 URL encoded (no padding)
+    /// Generates a secure random 32-octet sequence that is base64 URL encoded (no padding)
     fn code_verifier() -> String {
         let mut buf = [0; 32];
 
-        let rng = ring::rand::SystemRandom::new();
-        rng.fill(&mut buf).expect("ring::error::Unspecified");
+        graviola::random::fill(&mut buf);
 
         URL_SAFE_NO_PAD.encode(buf)
     }
 
     fn code_challenge(code_verifier: &String) -> String {
-        let mut context = ring::digest::Context::new(&ring::digest::SHA256);
+        let mut context = Sha256::new();
         context.update(code_verifier.as_bytes());
 
         // Known as code_challenge in proof key for code exchange
@@ -63,8 +59,8 @@ pub trait GenPkce {
     /// For authorization, the code_challenge_method parameter in the request body
     /// is automatically set to 'S256'.
     ///
-    /// Internally this method uses the Rust ring cyrpto library to generate a secure random
-    /// 32-octet sequence that is base64 URL encoded (no padding) and known as the code verifier.
+    /// Internally this method generates a secure random 32-octet sequence that is
+    /// base64 URL encoded (no padding) and known as the code verifier.
     /// This sequence is hashed using SHA256 and base64 URL encoded (no padding) resulting in a
     /// 43-octet URL safe string which is known as the code challenge.
     fn oneshot() -> IdentityResult<ProofKeyCodeExchange> {
@@ -134,7 +130,7 @@ mod test {
     #[test]
     fn validate_pkce_challenge_and_verifier() {
         let pkce = ProofKeyCodeExchange::oneshot().unwrap();
-        let mut context = ring::digest::Context::new(&ring::digest::SHA256);
+        let mut context = Sha256::new();
         context.update(pkce.code_verifier.as_bytes());
         let verifier = URL_SAFE_NO_PAD.encode(context.finish().as_ref());
         assert_eq!(verifier, pkce.code_challenge);

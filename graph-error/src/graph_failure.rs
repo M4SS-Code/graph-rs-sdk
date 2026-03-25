@@ -119,12 +119,6 @@ impl Default for GraphFailure {
     }
 }
 
-impl From<ring::error::Unspecified> for GraphFailure {
-    fn from(_: ring::error::Unspecified) -> Self {
-        GraphFailure::CryptoError
-    }
-}
-
 impl From<AuthExecutionError> for GraphFailure {
     fn from(value: AuthExecutionError) -> Self {
         match value {
