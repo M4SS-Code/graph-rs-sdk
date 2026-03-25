@@ -27,10 +27,10 @@ graph-error = { version = "1.0.0", path = "../graph-error"  }
 [features]
 default = ["native-tls"]
 native-tls = ["reqwest/native-tls"]
-rustls-tls = ["reqwest/rustls-tls"]
+rustls-tls = ["reqwest/rustls"]
 brotli = ["reqwest/brotli"]
 deflate = ["reqwest/deflate"]
-trust-dns = ["reqwest/trust-dns"]
+trust-dns = ["reqwest/hickory-dns"]
 socks = ["reqwest/socks"]
 blocking = ["reqwest/blocking"]
 

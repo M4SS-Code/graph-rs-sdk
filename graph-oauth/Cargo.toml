@@ -25,7 +25,7 @@ hex = "0.4.3"
 http = { workspace = true }
 jsonwebtoken = "9.1.0"
 openssl = { version = "0.10", optional=true }
-reqwest = { workspace = true, default-features=false, features = ["json", "gzip", "stream"] }
+reqwest = { workspace = true, default-features=false, features = ["form", "json", "gzip", "stream"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_urlencoded = "0.7.1"
@@ -45,10 +45,10 @@ graph-http = { path = "../graph-http", default-features = false }
 [features]
 default = ["native-tls"]
 native-tls = ["reqwest/native-tls", "graph-core/native-tls"]
-rustls-tls = ["reqwest/rustls-tls", "graph-core/rustls-tls"]
+rustls-tls = ["reqwest/rustls", "graph-core/rustls-tls"]
 brotli = ["reqwest/brotli", "graph-core/brotli"]
 deflate = ["reqwest/deflate", "graph-core/deflate"]
-trust-dns = ["reqwest/trust-dns", "graph-core/trust-dns"]
+trust-dns = ["reqwest/hickory-dns", "graph-core/trust-dns"]
 socks = ["reqwest/socks", "graph-core/socks"]
 blocking = ["reqwest/blocking", "graph-core/blocking", "graph-http/blocking"]
 openssl = ["dep:openssl"]
