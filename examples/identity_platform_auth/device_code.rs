@@ -5,7 +5,6 @@ use graph_rs_sdk::identity::{
 use graph_rs_sdk::GraphResult;
 use graph_rs_sdk::{identity::ConfidentialClientApplication, Graph};
 use std::time::Duration;
-use warp::hyper::body::HttpBody;
 
 // https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code
 
