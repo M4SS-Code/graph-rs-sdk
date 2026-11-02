@@ -4,3 +4,6 @@ ignore = [
     { id = "RUSTSEC-2026-0387", reason = "`crypto-bigint` 0.5 is pinned by `elliptic-curve` via `jsonwebtoken`. We do not handle secret integers through it. Re-evaluate if we ever sign with `jsonwebtoken`." },
     { id = "RUSTSEC-2024-0449", reason = "`unsafe-libyaml` is unmaintained, not vulnerable. It only parses OpenAPI metadata in the unpublished `graph-codegen` crate." },
 ]
+
+[licenses]
+allow = ["MIT", "Apache-2.0", "BSD-3-Clause", "Unicode-3.0"]
