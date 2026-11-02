@@ -1,0 +1,6 @@
+[advisories]
+ignore = [
+    { id = "RUSTSEC-2023-0071", reason = "`rsa` has no patched release. It comes from `jsonwebtoken`, which we only use to verify RS256 tokens with public keys. Re-evaluate if we ever sign with `jsonwebtoken`." },
+    { id = "RUSTSEC-2026-0387", reason = "`crypto-bigint` 0.5 is pinned by `elliptic-curve` via `jsonwebtoken`. We do not handle secret integers through it. Re-evaluate if we ever sign with `jsonwebtoken`." },
+    { id = "RUSTSEC-2024-0449", reason = "`unsafe-libyaml` is unmaintained, not vulnerable. It only parses OpenAPI metadata in the unpublished `graph-codegen` crate." },
+]
